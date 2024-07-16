@@ -1,0 +1,104 @@
+﻿@model CreateFormViewModel
+
+@{
+    ViewData["Title"] = "Create Movie";
+}
+
+<h2>Create Movie</h2>
+
+<hr/>
+<section class="row justify-content-between">
+    <div class="col-md-4">
+        <form method="POST" asp-action="Create" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="text-muted" asp-for="Title"></label>
+                <input type="text" class="form-control" asp-for="Title" maxlength="250"/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GenreId" class="text-muted"></label>
+                <select class="form-select " asp-for="GenreId" asp-items="Model.Genres"
+                        data-placeholder="Select a Genre" data-minimum-results-for-search="Infinity">
+                    <option value=""> Select a Genre </option>
+                </select>
+                <span asp-validation-for="GenreId" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label class="text-muted" asp-for="Year"></label>
+                    <input type="number" class="form-control" asp-for="Year" value="@Model.Year"/>
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="text-muted" asp-for="Rate"></label>
+                    <input type="number" class="form-control" asp-for="Rate" value="@Model.Rate"/>
+                    <span asp-validation-for="Rate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted" asp-for="StoryLine"></label>
+                <textarea class="form-control" asp-for="StoryLine" maxlength="2500" rows="4"></textarea>
+                <span asp-validation-for="StoryLine" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Poster" class="text-muted"></label>
+                <input type="file" class="form-control text-muted" asp-for="Poster"
+                       data-rule-extension="@FileSettings.AllowedExtensions.Replace(".", String.Empty)"
+                       data-msg-extensions="Not Allowed Extensions"
+                       data-rule-filesize="@FileSettings.MaxFileSizeInBytes"
+                       data-msg-filesize="Maximum allowed size is @FileSettings.MaxFileSizeInMB" MB.>
+
+
+                <small class="form-text text-muted">
+                    Only @FileSettings.AllowedExtensions and
+                    Files are allowed with Max Size @(FileSettings.MaxFileSizeInMB)MB.
+                </small>
+
+                <span asp-validation-for="Poster" class="text-danger d-block"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4">
+                <i class="bi bi-check"></i>
+                Save
+            </button>
+
+            <a asp-action="Index" class="btn btn-outline-secondary mt-4">
+                <i class="bi bi-x"></i>
+                Cancel
+            </a>
+
+        </form>
+    </div>
+
+    <div class="col-md-6 d-flex justify-content-center pt-4 overflow-hidden">
+        <img class="Poster-preview d-none" alt="Cover"/>
+    </div>
+
+</section>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+    <script>
+        $(document).ready(function() {
+            window.$('#Poster').on('change',
+                function() {
+
+                    window.$('.Poster-preview').attr('src', window.URL.createObjectURL(this.files[0])).removeClass('d-none');
+
+
+                });
+
+            window.$('#Year').datepicker({
+                format: 'yyyy',
+                viewMode: 'years',
+                minViewMode: 'years',
+                autoclose: true,
+                startDate: new Date('1950-01-01'),
+                endDate: new Date()
+            });
+        });
+    </script>
+}

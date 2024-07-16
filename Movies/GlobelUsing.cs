@@ -1,0 +1,16 @@
+﻿global using Microsoft.AspNetCore.Mvc;
+global using System.ComponentModel.DataAnnotations;
+global using System.Diagnostics;
+global using Microsoft.EntityFrameworkCore;
+global using Movies.Models;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using Microsoft.AspNetCore.Mvc.Rendering;
+global using Movies.Data;
+global using Movies.Settings;
+global using Movies.ViewModels;
+global using Movies.Services;
+global using Movies.Attributes;
+global using NToastNotify;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Authorization;
